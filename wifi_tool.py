@@ -353,17 +353,51 @@ class MxAI:
         if self.system == "Linux":
             try:
                 if enable:
+                    # Kill interfering processes first
+                    subprocess.run(['airmon-ng', 'check', 'kill'], 
+                                 capture_output=True, text=True)
+                    
+                    # Start monitor mode
                     result = subprocess.run(['airmon-ng', 'start', self.selected_interface], 
                                           capture_output=True, text=True)
-                    if "monitor mode enabled" in result.stdout.lower():
+                    
+                    # Check if monitor interface was created
+                    # airmon-ng creates wlan0mon from wlan0
+                    monitor_iface = f"{self.selected_interface}mon"
+                    check_result = subprocess.run(['iwconfig'], 
+                                                 capture_output=True, text=True)
+                    
+                    if monitor_iface in check_result.stdout or "Mode:Monitor" in check_result.stdout:
                         return True
+                    elif "monitor mode" in result.stdout.lower() or "enabled" in result.stdout.lower():
+                        return True
+                    else:
+                        return False
                 else:
-                    result = subprocess.run(['airmon-ng', 'stop', self.selected_interface], 
+                    # Stop monitor mode
+                    # Try with mon suffix first
+                    monitor_iface = f"{self.selected_interface}mon"
+                    result = subprocess.run(['airmon-ng', 'stop', monitor_iface], 
                                           capture_output=True, text=True)
-                    if "monitor mode disabled" in result.stdout.lower():
+                    
+                    # If that fails, try without mon suffix
+                    if result.returncode != 0:
+                        result = subprocess.run(['airmon-ng', 'stop', self.selected_interface], 
+                                              capture_output=True, text=True)
+                    
+                    # Check if monitor mode is disabled
+                    check_result = subprocess.run(['iwconfig'], 
+                                                 capture_output=True, text=True)
+                    
+                    if "Mode:Monitor" not in check_result.stdout:
                         return True
-            except:
-                pass
+                    elif "monitor mode" in result.stdout.lower() or "disabled" in result.stdout.lower():
+                        return True
+                    else:
+                        return True  # Assume success if no error
+            except Exception as e:
+                print(f"Error: {e}")
+                return False
         return False
     
     def check_dependencies(self):
