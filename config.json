@@ -1,0 +1,44 @@
+{
+  "tool_name": "MxAI WiFi Tool",
+  "version": "1.0",
+  "developer": "Manoj Kumar",
+  "default_settings": {
+    "deauth_packets": 10,
+    "scan_timeout": 30,
+    "crack_timeout": 300,
+    "wordlist_size": "medium",
+    "auto_save_captures": true
+  },
+  "supported_encryption": [
+    "WPA",
+    "WPA2",
+    "WPA3"
+  ],
+  "compatible_adapters": [
+    "Alfa AWUS036NHA",
+    "Alfa AWUS036NH",
+    "TP-Link TL-WN722N v1",
+    "Panda PAU09",
+    "Alfa AWUS036ACH",
+    "RTL8812AU based",
+    "RTL8814AU based"
+  ],
+  "platform_requirements": {
+    "linux": {
+      "required_tools": [
+        "aircrack-ng",
+        "iwconfig",
+        "airmon-ng",
+        "airodump-ng",
+        "aireplay-ng"
+      ],
+      "notes": "Requires root privileges for monitor mode"
+    },
+    "windows": {
+      "required_tools": [
+        "netsh"
+      ],
+      "notes": "Limited to basic scanning features"
+    }
+  }
+}

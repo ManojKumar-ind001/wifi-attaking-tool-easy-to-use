@@ -1,0 +1,38 @@
+# MxAI WiFi Tool - Requirements
+# Developed by Manoj Kumar
+
+# Python Standard Library (No external packages required)
+# The tool uses only built-in Python modules:
+# - os
+# - sys
+# - subprocess
+# - platform
+# - time
+# - random
+# - string
+# - datetime
+
+# System Requirements:
+
+# For Windows:
+# - Python 3.6 or higher
+# - netsh (built-in Windows command)
+
+# For Linux (Full Features):
+# - Python 3.6 or higher
+# - aircrack-ng suite
+# - wireless-tools
+
+# Linux Installation:
+# Ubuntu/Debian:
+#   sudo apt-get update
+#   sudo apt-get install aircrack-ng wireless-tools python3
+
+# Arch Linux:
+#   sudo pacman -S aircrack-ng wireless_tools python
+
+# Fedora/RHEL:
+#   sudo yum install aircrack-ng wireless-tools python3
+
+# Note: No pip packages required!
+# This tool uses only Python standard library for maximum compatibility.
